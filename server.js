@@ -36,10 +36,25 @@ app.get("/books", (req, res) => {
 app.get("/books/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const book = books.find((b) => b.id === id);
-  if(!book){
-    return res.json({message:"Book not found."})
+  if (!book) {
+    return res.json({ message: "Book not found." });
   }
   res.status(200).json(book);
+});
+
+app.put("/books/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { title, author } = req.body;
+
+  const index = books.findIndex((book) => book.id === id);
+
+  if(index === -1){
+    return res.status(404).json({message:"Book not found!"})
+  }
+  books[index] = {id,title,author}
+
+  res.json({message:"Book updated", book:books[index]})
+
 });
 
 app.listen(port, () => {
