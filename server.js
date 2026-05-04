@@ -34,7 +34,12 @@ app.get("/books", (req, res) => {
 });
 
 app.get("/books/:id", (req, res) => {
-  const id = parseInt(req.params.id)
+  const id = parseInt(req.params.id);
+  const book = books.find((b) => b.id === id);
+  if(!book){
+    return res.json({message:"Book not found."})
+  }
+  res.status(200).json(book);
 });
 
 app.listen(port, () => {
