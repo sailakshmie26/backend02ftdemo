@@ -44,17 +44,29 @@ app.get("/books/:id", (req, res) => {
 
 app.put("/books/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const { title, author } = req.body;
+  const { title, author, price } = req.body;
 
   const index = books.findIndex((book) => book.id === id);
 
-  if(index === -1){
-    return res.status(404).json({message:"Book not found!"})
+  if (index === -1) {
+    return res.status(404).json({ message: "Book not found!" });
   }
-  books[index] = {id,title,author}
+  books[index] = { id, title, author, price };
 
-  res.json({message:"Book updated", book:books[index]})
+  res.json({ message: "Book updated", book: books[index] });
+});
 
+app.delete("/books/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const index = books.findIndex((book) => book.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ message: "Book not found!" });
+  }
+
+  books.splice(index, 1);
+  res.json({ message: "Book Deleted." });
 });
 
 app.listen(port, () => {
