@@ -5,7 +5,7 @@ app.use(express.json());
 
 const port = 5000;
 
-const books = [];
+
 
 app.post("/books", (req, res) => {
   //   const title = req.body.title;
