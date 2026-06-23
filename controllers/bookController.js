@@ -1,14 +1,15 @@
-import books from '../models/bookModel.js'
+import books from "../models/bookModel.js";
 
-export const getAllBooks = (req,res) =>{
-      res.json(books);
-}
+export const getAllBooks = (req, res) => {
+  const myBooks = books.filter((b) => b.id === req.user.userId);
+  res.json(myBooks);
+};
 
-export const createBook = (req,res) => {
-      const { title, author, price } = req.body;
+export const createBook = (req, res) => {
+  const { title, author, price } = req.body;
 
   if (!title || !author || !price) {
-    return response.json({ error: "All fields are required!" });
+    return res.json({ error: "All fields are required!" });
   }
 
   const newBook = {
@@ -16,22 +17,23 @@ export const createBook = (req,res) => {
     title,
     author,
     price,
+    userId: req.user.id,
   };
 
   books.push(newBook);
   res.status(201).json(newBook);
-}
+};
 
-export const getSingleBook = (req,res) => {
+export const getSingleBook = (req, res) => {
   const id = parseInt(req.params.id);
   const book = books.find((b) => b.id === id);
   if (!book) {
     return res.json({ message: "Book not found." });
   }
   res.status(200).json(book);
-}
+};
 
-export const updateBook = (req,res) => {
+export const updateBook = (req, res) => {
   const id = parseInt(req.params.id);
   const { title, author, price } = req.body;
 
@@ -43,9 +45,9 @@ export const updateBook = (req,res) => {
   books[index] = { id, title, author, price };
 
   res.json({ message: "Book updated", book: books[index] });
-}
+};
 
-export const deleteBook = (req,res) => {
+export const deleteBook = (req, res) => {
   const id = parseInt(req.params.id);
 
   const index = books.findIndex((book) => book.id === id);
@@ -56,4 +58,4 @@ export const deleteBook = (req,res) => {
 
   books.splice(index, 1);
   res.json({ message: "Book Deleted." });
-}
+};
