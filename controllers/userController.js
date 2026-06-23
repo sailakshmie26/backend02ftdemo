@@ -12,7 +12,7 @@ export const registerUser = (req,res) => {
    }
 
    const newUser = {
-      id:users.length+1;
+      id:users.length+1,
       username,
       password
    }
@@ -20,6 +20,15 @@ export const registerUser = (req,res) => {
    res.status(201).json({message:"User registered."})
 };
 
-export const loginUser = () => {
+export const loginUser = (req, res) => {
+   const {username, password} = req.body
+   const user = users.find((u) => user.username === username && user.password === password)
+
+   if(!user){
+      return res.json({message:"Invalid credentials!"})
+   }
+
+   const token = `user-${user.id}`
    
+   res.json({message:"Login successful",token})
 }
