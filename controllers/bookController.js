@@ -1,7 +1,7 @@
 import books from "../models/bookModel.js";
 
 export const getAllBooks = (req, res) => {
-  const myBooks = books.filter((b) => b.id === req.user.userId);
+  const myBooks = books.filter((b) => b.userId === req.user.id);
   res.json(myBooks);
 };
 

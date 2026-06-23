@@ -5,7 +5,7 @@ import { createBook, updateBook, getAllBooks, getSingleBook, deleteBook } from '
 const router = express.Router()
 
 router.post('/', protect, createBook)
-router.get('/', getAllBooks)
+router.get('/', protect, getAllBooks)
 router.get('/:id', getSingleBook)
 router.put('/:id', updateBook)
 router.delete('/:id', deleteBook)
