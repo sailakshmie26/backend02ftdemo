@@ -23,7 +23,7 @@ export const registerUser = (req, res) => {
 export const loginUser = (req, res) => {
   const { username, password } = req.body;
   const user = users.find(
-    (u) => user.username === username && user.password === password,
+    (u) => u.username === username && u.password === password,
   );
 
   if (!user) {
@@ -34,3 +34,6 @@ export const loginUser = (req, res) => {
 
   res.json({ message: "Login successful", token });
 };
+
+
+
